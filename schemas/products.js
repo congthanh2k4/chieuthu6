@@ -35,4 +35,8 @@ let productsSchema = mongoose.Schema({
 }, {
     timestamps: true
 })
+productsSchema.post('save', async function (doc) {
+    const Inventory = mongoose.model('inventory');
+    await Inventory.create({ product: doc._id });
+});
 module.exports = new mongoose.model('product', productsSchema)
